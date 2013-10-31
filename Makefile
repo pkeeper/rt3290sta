@@ -12,6 +12,11 @@ ifeq ($(CHIPSET),)
 CHIPSET = 3290
 endif
 
+ifndef NET_BOOT_DIR
+NET_BOOT_DIR = /dev/null 
+#NET_BOOT_DIR = $(NET_BOOT_DIR)
+endif
+
 MODULE = $(word 1, $(CHIPSET))
 
 #OS ABL - YES or NO
@@ -200,8 +205,8 @@ CROSS_COMPILE =
 endif
 
 ifeq ($(PLATFORM),INTELP6)
-LINUX_SRC = /tftpboot/IntelCE-20.0.11052.243193/project_build_i686/IntelCE/kernel-20.0.11024.238456/linux-2.6.35
-CROSS_COMPILE = /tftpboot/IntelCE-20.0.11052.243193/build_i686/i686-linux-elf/bin/i686-cm-linux-
+LINUX_SRC = $(NET_BOOT_DIR)/IntelCE-20.0.11052.243193/project_build_i686/IntelCE/kernel-20.0.11024.238456/linux-2.6.35
+CROSS_COMPILE = $(NET_BOOT_DIR)/IntelCE-20.0.11052.243193/build_i686/i686-linux-elf/bin/i686-cm-linux-
 endif
 
 ifeq ($(PLATFORM),IXP)
@@ -350,26 +355,26 @@ ifeq ($(OSABL),YES)
 endif
 
 ifeq ($(RT28xx_MODE),AP)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)ap.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)ap.o $(NET_BOOT_DIR)
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)ap.o /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)ap.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)ap.o $(NET_BOOT_DIR)
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)ap.o $(NET_BOOT_DIR)
 endif
 ifeq ($(PLATFORM),INF_AMAZON_SE)
-	cp -f /tftpboot/rt2870ap.o /backup/ifx/build/root_filesystem/lib/modules/2.4.31-Amazon_SE-3.6.2.2-R0416_Ralink/kernel/drivers/net
+	cp -f $(NET_BOOT_DIR)/rt2870ap.o /backup/ifx/build/root_filesystem/lib/modules/2.4.31-Amazon_SE-3.6.2.2-R0416_Ralink/kernel/drivers/net
 endif
 else	
 ifeq ($(RT28xx_MODE),APSTA)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)apsta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)apsta.o $(NET_BOOT_DIR)
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)apsta.o /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)apsta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)apsta.o $(NET_BOOT_DIR)
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)apsta.o $(NET_BOOT_DIR)
 endif
 else
-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.o $(NET_BOOT_DIR)
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)sta.o /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)sta.o /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)sta.o $(NET_BOOT_DIR)
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)sta.o $(NET_BOOT_DIR)
 endif
 endif	
 endif	
@@ -397,25 +402,25 @@ ifeq ($(OSABL),YES)
 endif
 
 ifeq ($(RT28xx_MODE),AP)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)ap.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)ap.ko $(NET_BOOT_DIR)
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)ap.ko /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)ap.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)ap.ko $(NET_BOOT_DIR)
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)ap.ko $(NET_BOOT_DIR)
 endif
 	rm -f os/linux/rt$(MODULE)ap.ko.lzma
 	/root/bin/lzma e os/linux/rt$(MODULE)ap.ko os/linux/rt$(MODULE)ap.ko.lzma
 else	
 ifeq ($(RT28xx_MODE),APSTA)
-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)apsta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)apsta.ko $(NET_BOOT_DIR)
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)apsta.ko /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)apsta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)apsta.ko $(NET_BOOT_DIR)
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)apsta.ko $(NET_BOOT_DIR)
 endif
 else
-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.ko $(NET_BOOT_DIR)
 ifeq ($(OSABL),YES)
-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)sta.ko /tftpboot
-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)sta.ko /tftpboot
+	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)sta.ko $(NET_BOOT_DIR)
+	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)sta.ko $(NET_BOOT_DIR)
 endif
 endif
 endif
