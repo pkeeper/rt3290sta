@@ -987,15 +987,15 @@ void linux_pci_unmap_single(void *handle, ra_dma_addr_t dma_addr, size_t size, i
 		(RTPKT_TO_OSPKT(_pkt)->len) = (_len)
 		
 #define GET_OS_PKT_DATATAIL(_pkt) \
-		(RTPKT_TO_OSPKT(_pkt)->tail)
+		((unsigned char*)skb_tail_pointer(RTPKT_TO_OSPKT(_pkt)))
 #define SET_OS_PKT_DATATAIL(_pkt, _start, _len)	\
-		((RTPKT_TO_OSPKT(_pkt))->tail) = (PUCHAR)((_start) + (_len))
+		(skb_set_tail_pointer((RTPKT_TO_OSPKT(_pkt)), (_len)))
 		
 #define GET_OS_PKT_HEAD(_pkt) \
 		(RTPKT_TO_OSPKT(_pkt)->head)
 
 #define GET_OS_PKT_END(_pkt) \
-		(RTPKT_TO_OSPKT(_pkt)->end)
+		((unsigned char*)skb_end_pointer(RTPKT_TO_OSPKT(_pkt)))
 
 #define GET_OS_PKT_NETDEV(_pkt) \
 		(RTPKT_TO_OSPKT(_pkt)->dev)

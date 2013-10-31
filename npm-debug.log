@@ -11,7 +11,7 @@ ERR!     <http://bugs.debian.org/npm>
 ERR! or use
 ERR!     reportbug --attach /home/keeper/Загрузки/DPO_RT3290_LinuxSTA_V2600_20120508/npm-debug.log npm
 ERR! 
-ERR! System Linux 3.2.0-55-generic
+ERR! System Linux 3.8.0-33-generic
 ERR! command "node" "/usr/bin/npm" "completion"
 ERR! cwd /home/keeper/Загрузки/DPO_RT3290_LinuxSTA_V2600_20120508
 ERR! node -v v0.6.12
