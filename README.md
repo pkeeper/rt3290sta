@@ -8,7 +8,7 @@ Driver status
 While not fully stable, it works much better than rt2800pci kernel driver. If it stops to work, reload the driver. Bluetooth is not working.
 You need to recompile driver on every kernel update (or you could make DKMS from it and send me a patch). 
 
-instalation
+Installation
 ===========
  * fork this repo
  * cd into it
@@ -20,11 +20,11 @@ instalation
 
 Now you need to make it load on startup. Blacklist the "rt2800pci" driver in /etc/modprobe.d/blacklist.conf and add "rt3290sta" to /etc/modules.
 
-reinstaling
+Reinstalling
 ===========
 cd to a driver directory, run `make clean && make && sudo make install && modprobe rt3290sta`
 
 
-help
+Help
 ====
 If someone could debug it and make patches, it could be pretty cool :)
