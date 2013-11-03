@@ -33,12 +33,19 @@
 #include "rt_os_util.h"
 #include "rt_os_net.h"
 #include <linux/pci.h>
+#include <linux/version.h>
 
 /* */
 /* Function declarations */
 /* */
 /*extern int rt28xx_close(IN struct net_device *net_dev); */
 /*extern int rt28xx_open(struct net_device *net_dev); */
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,8,0)
+#define __devexit
+#define __devinit
+#define __devinitdata
+#endif
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,8,0)
 static VOID rt2860_remove_one(struct pci_dev *pci_dev);
@@ -94,18 +101,20 @@ static struct pci_driver rt2860_driver =
     name:       RTMP_DRV_NAME,
     id_table:   rt2860_pci_tbl,
     probe:      rt2860_probe,
-#if LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0) /* 3.8 check */
-#if LINUX_VERSION_CODE >= 0x20412 
-    remove:     __devexit_p(rt2860_remove_one),
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,8,0)
+    remove:     rt2860_remove_one,
 #else
-    remove:     __devexit(rt2860_remove_one),
+#if LINUX_VERSION_CODE >= 0x20412 
+    remove:     __devexit_p(rt2860_remove_one), 
+#else 
+    remove:     __devexit(rt2860_remove_one), 
+#endif 
 #endif
-#endif /* 3.8 check */
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,0)
 #ifdef CONFIG_PM
-	suspend:	rt2860_suspend,
-	resume:		rt2860_resume,
+    suspend:	rt2860_suspend,
+    resume:	rt2860_resume,
 #endif
 #endif
 };
